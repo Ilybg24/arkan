@@ -92,34 +92,28 @@
   table {
     width: 90%;
     margin: 0 auto;
-    border-collapse: collapse;
-    text-align: center;
-    margin-top: 550px;
   }
 }
 
 table {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   border-collapse: collapse;
   text-align: center;
-  margin-top: 550px;
+  margin-top: 450px;
 }
-th, td {
-  padding: 10px;
-}
+
 th {
   background-color: #212221;
   color: white;
+  font-size: 20px;
+  text-align: center;
 }
 
 td{
   background-color: #a6b5c5;
   color: rgb(0, 0, 0);
 } 
-
-
-
 
     /* codice per la barra */
     :root {
