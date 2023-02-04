@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="mawaqit.css" />
+  </head>
+  <body>
+    <header>
+      <a href="#demo">
+        <img id="logo" src="img/logo1.png" alt="Logo de la société">
+      </a>
+  
+      <div id="demo" class="modal">
+        <div class="modal_content">
+          <h1>  إِلْيَاس </h1>
+          <p> هذا العمل وقف لله </p>
+          <a href="#" class="modal_close">&times;</a>
+        </div>
+      </div>
+  
+      <input type="checkbox" id="main-navigation-toggle" class="btn btn--close" title="Toggle main navigation" />
+      <label for="main-navigation-toggle">
+        <span></span>
+      </label>
+      
+      <nav id="main-navigation" class="nav-main">
+        <ul class="menu">
+          <li class="menu__item">
+            <a class="menu__link" href="index.html">Qibla</a>
+          </li>
+          <li class="menu__item">
+            <a class="menu__link" href="massajid.html">Massajid</a>
+          </li>
+          <li class="menu__item">
+            <a class="menu__link" href="mawaqit.html">Mawaqit</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <video autoplay loop muted id="bg-video">
+      <source src="img/backgroundprieres.mp4" type="video/mp4">
+    </video>
+
+    <div class="prayer-times">
+      <div class="containerpriere">
+        <p id="prayer"></p>
+        <div class="containerTimePriere">
+          <p id="timer"></p>
+        </div>
+      </div>  
+    </div>
+    <table id="prayerTimesTable">
+      <tr>
+          <th>Jour</th>
+          <th>Fajr</th>
+          <th>Dhuhr</th>
+          <th>Asr</th>
+          <th>Maghrib</th>
+          <th>Isha</th>
+      </tr>
+      <tr id="prayerTimesRow"></tr>
+    </table>
+
+    <script>
+
+
+      let date = new Date();
+      let currentMonth = date.getMonth() + 1; // getMonth() renvoie un index compris entre 0 et 11, donc nous ajoutons 1 pour avoir un mois compris entre 1 et 12
+      let currentYear = date.getFullYear();
+      let address = "Montpellier, France";
+      let method = 2;
+      // URL de l'API pour récupérer les heures de prière
+
+      var apiUrl = `http://api.aladhan.com/v1/calendarByAddress?address=${address}&method=${method}&month=${currentMonth}&year=${currentYear}`;
+
+    
+      // Mettre à jour l'heure de la prière toutes les 1 seconde
+      var x = setInterval(function() {
+        // Appeler l'API pour récupérer les heures de prière
+        fetch(apiUrl)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            // Récupérer les heures de prière pour le jour en cours
+            var date = data.data[0];
+            var prayerTimes = {
+              "Fajr": date.timings.Fajr,
+              "Lever du soleil": date.timings.Sunrise,
+              "Dohr": date.timings.Dhuhr,
+              "Asr": date.timings.Asr,
+              "Maghrib": date.timings.Maghrib,
+              "Isha": date.timings.Isha,
+              "Qiyam": date.timings.Midnight
+            };
+    
+            // Obtenir la date et l'heure actuelles
+            var now = new Date();
+            var currentHour = now.getHours();
+            var currentMinute = now.getMinutes();
+            var currentSecond = now.getSeconds();
+            var currentTime = currentHour * 60 + currentMinute;
+    
+            // Boucler sur les heures de chaque prière
+            for (var prayer in prayerTimes) {
+              // Séparer l'heure et les minutes
+              var time = prayerTimes[prayer].split(":");
+              var prayerHour = parseInt(time[0]);
+              var prayerMinute = parseInt(time[1]);
+              var prayerTime = prayerHour * 60 + prayerMinute;
+    
+              // Trouver la prière la plus proche
+              if (prayerTime > currentTime) {
+                var timeLeft = prayerTime - currentTime;
+                var hoursLeft = Math.floor(timeLeft / 60);
+                var minutesLeft = timeLeft % 60;
+                var secondsLeft = 60 - currentSecond;
+    
+                // Mettre à jour le HTML
+                document.getElementById("prayer").innerHTML = "La priére suivante : " + prayer;
+                document.getElementById("timer").innerHTML = hoursLeft + " heures " + minutesLeft + " minutes " + secondsLeft + " secondes";
+                break;
+              }
+            }
+          });
+      }, 1000);
+
+      const prayer = document.getElementById("prayer");
+      prayer.addEventListener("click", function() {
+        if (prayer.style.color === "red") {
+          prayer.style.color = "black";
+        } else {
+          prayer.style.color = "red";
+        }
+      });
+
+      const apiUrlT = "https://api.aladhan.com/v1/timingsByCity?city=Montpellier&country=France&method=2";
+      const tableRow = document.querySelector("#prayerTimesRow");
+      const today = new Date();
+      fetch(apiUrlT)
+      .then(response => response.json())
+      .then(data => {
+          let dayCell = tableRow.insertCell();
+          let fajrCell = tableRow.insertCell();
+          let dhuhrCell = tableRow.insertCell();
+          let asrCell = tableRow.insertCell();
+          let maghribCell = tableRow.insertCell();
+          let ishaCell = tableRow.insertCell();
+
+          dayCell.innerHTML = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+          fajrCell.innerHTML = data.data.timings.Fajr;
+          dhuhrCell.innerHTML = data.data.timings.Dhuhr;
+          asrCell.innerHTML = data.data.timings.Asr;
+          maghribCell.innerHTML = data.data.timings.Maghrib;
+          ishaCell.innerHTML = data.data.timings.Isha;
+      })
+      .catch(error => console.error(error));
+
+    </script>
+    
+  </body>
+</html>    
+

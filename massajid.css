@@ -1,0 +1,592 @@
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Reem+Kufi&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Roboto:700');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Reem+Kufi&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap');
+
+    body{
+    background-color:rgb(232, 223, 212);
+    }
+
+    header {
+        justify-content: space-between; /* aligne les éléments à gauche et à droite */
+        align-items: center; /* aligne les éléments au centre verticalement */
+        background-image: url(img/massajidheader.jpg);
+        border-radius: 20px;
+    }
+
+    /* codice per la barra */
+    :root {
+    --color-primary: #18181a;
+    --color-secondary: #75757c;
+    --color-dark: #364c62;
+    --color-light: #f5f5f5;
+    --font-family-primary: "Playfair Display", serif;
+    --font-family-secondary: "Amiri", serif;
+    --td: 150ms;
+    --te: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    .nav-main {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: -100%;
+    position: fixed;
+    transition: left 0s calc(var(--td) * 2), transform 0s calc(var(--td) * 2);
+    width: 100%;
+    z-index: 500;
+    }
+    .nav-main::before, .nav-main::after {
+    content: "";
+    background-image: url(img/massajidnav.png);
+    height: 500%;
+    left: 0;
+    position: absolute;
+    transform: translateX(-110%);
+    transform-origin: 0 50%;
+    transition: transform calc(var(--td) * 2) var(--td) var(--te);
+    width: 100%;
+    z-index: -100;
+    }
+    .nav-main::before {
+    top: 0;
+    }
+    .nav-main::after {
+    bottom: 0;
+    }
+    .nav-main .menu__item {
+    opacity: 0;
+    transform: translateX(-1rem);
+    transition: opacity var(--td) var(--te), transform var(--td) var(--te);
+    }
+
+    [id=main-navigation-toggle] {
+    opacity: 0;
+    position: fixed;
+    top: -100%;
+    }
+    [id=main-navigation-toggle] ~ label {
+    cursor: pointer;
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 600;
+    }
+    [id=main-navigation-toggle] ~ label span {
+    display: block;
+    height: 2rem;
+    padding: 0.5rem;
+    position: relative;
+    transition: transform calc(var(--td) * 3) var(--te);
+    width: 2rem;
+    }
+    [id=main-navigation-toggle] ~ label span::before, [id=main-navigation-toggle] ~ label span::after {
+    background-color: black;
+    bottom: 0;
+    content: "";
+    height: 4px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    transition: transform calc(var(--td) * 3) var(--te);
+    top: 0;
+    width: calc(100% - 1rem);
+    }
+    [id=main-navigation-toggle] ~ label span::before {
+    transform: rotate(0) translateY(-100%);
+    }
+    [id=main-navigation-toggle] ~ label span::after {
+    transform: rotate(0) translateY(100%);
+    }
+
+    [id=main-navigation-toggle]:checked ~ label span {
+    transform: rotate(1turn);
+    }
+    [id=main-navigation-toggle]:checked ~ label span::before {
+    transform: rotate(45deg);
+    }
+    [id=main-navigation-toggle]:checked ~ label span::after {
+    transform: rotate(-45deg);
+    }
+
+    [id=main-navigation-toggle]:checked ~ .nav-main {
+    left: 0;
+    transition: transform 0s;
+    }
+    [id=main-navigation-toggle]:checked ~ .nav-main::before, [id=main-navigation-toggle]:checked ~ .nav-main::after {
+    transform: translateX(0);
+    transition-delay: 0s;
+    }
+    [id=main-navigation-toggle]:checked ~ .nav-main::after {
+    transition-delay: calc(var(--td) / 2);
+    }
+    [id=main-navigation-toggle]:checked ~ .nav-main .menu__item {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity calc(var(--td) * 2) var(--te), transform calc(var(--td) * 2) var(--te);
+    }
+    [id=main-navigation-toggle]:checked ~ .nav-main .menu__item:nth-child(1) {
+    transition-delay: calc(var(--td) * 2 * (1 * 0.25));
+    z-index: -1;
+    }
+    [id=main-navigation-toggle]:checked ~ .nav-main .menu__item:nth-child(2) {
+    transition-delay: calc(var(--td) * 2 * (2 * 0.25));
+    z-index: -2;
+    }
+    [id=main-navigation-toggle]:checked ~ .nav-main .menu__item:nth-child(3) {
+    transition-delay: calc(var(--td) * 2 * (3 * 0.25));
+    z-index: -3;
+    }
+    [id=main-navigation-toggle]:checked ~ .nav-main .menu__item:nth-child(4) {
+    transition-delay: calc(var(--td) * 2 * (4 * 0.25));
+    z-index: -4;
+    }
+    [id=main-navigation-toggle]:checked ~ .nav-main .menu__item:nth-child(5) {
+    transition-delay: calc(var(--td) * 2 * (5 * 0.25));
+    z-index: -5;
+    }
+
+    .menu {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+    }
+    
+    .menu > .menu__item {
+    font-family: 'Playfair Display', serif;
+    font-size: 10vmin;
+    }
+
+    .submenu {
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    transform: translateY(-10%);
+    top: 100%;
+    width: 100%;
+    visibility: hidden;
+    z-index: 2;
+    }
+    .submenu .menu__item {
+    font-family: var(--font-family-primary);
+    font-size: 3.5vmin;
+    width: 100%;
+    }
+
+    .submenu .menu__link {
+    color: var(--color-secondary);
+    text-shadow: 1px 1px 0 var(--color-primary), 2px 2px 0 var(--color-primary);
+    }
+    .submenu .menu__link::before, .submenu .menu__link::after {
+    display: none;
+    }
+
+    .menu__item {
+    display: block;
+    position: relative;
+    }
+    .menu__item:hover .menu__link::before, .menu__item:hover .menu__link::after {
+    animation: blink 1s var(--td) steps(1, end) forwards infinite;
+    transform: translateX(calc(100% - 0.5rem));
+    transition-duration: calc(var(--td) * 3);
+    }
+    .menu__item:hover .menu__link::after {
+    transition-delay: calc(var(--td) / 2);
+    }
+    .menu__item:hover .submenu {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform calc(var(--td) * 2) calc(var(--td) * 3) var(--te), opacity calc(var(--td) * 2) calc(var(--td) * 3) var(--te), visibility 0s calc(var(--td) * 3);
+    visibility: visible;
+    }
+
+    .menu__link {
+    color: #000000;
+    display: inline-block;
+    font-size: bold;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 0.5rem 1rem 2.125rem;
+    left: -15px;
+    position: relative;
+    text-decoration: none;
+    transition: color var(--td) var(--te), opacity var(--td) var(--te), transform var(--td) var(--te);
+    z-index: 1;
+    }
+    .menu__link::before, .menu__link::after {
+    content: "";
+    background-color: var(--color-light);
+    height: 50%;
+    left: 0;
+    position: absolute;
+    transform: translateX(-110%);
+    transform-origin: 0 50%;
+    transition: transform 0s var(--te);
+    width: 100%;
+    z-index: -1;
+    }
+    .menu__link::before {
+    top: 0;
+    }
+    .menu__link::after {
+    bottom: 0;
+    }
+
+    .menu:not(:focus-within):not(:hover) .menu__item .menu__link {
+    opacity: 1;
+    transform: translate(0, 0);
+    }
+
+    .menu__item {
+    --pull: 30%;
+    }
+    .menu__item .menu__link {
+    opacity: 0.25;
+    transition-duration: calc(var(--td) * 3);
+    transform: translate(0, calc(var(--pull) * -1));
+    }
+    .menu__item .submenu .menu__link {
+    opacity: 1;
+    }
+    .menu__item:hover > .menu__link {
+    color: var(--color-secondary);
+    opacity: 1;
+    transform: translate(0, 0);
+    }
+    .menu__item:hover > .menu__link:hover {
+    color: var(--color-light);
+    transition-delay: 0s;
+    }
+    .menu__item:hover ~ .menu__item > .menu__link {
+    transition-duration: calc(var(--td) * 3);
+    transform: translate(0, var(--pull));
+    }
+
+    @keyframes blink {
+    50%, 100% {
+        opacity: 0;
+    }
+    }
+    /* codice per la barra */
+
+
+    /* codice per il testo */
+    @keyframes showTopText {
+    0% { transform: translate3d(0, 100%, 0); }
+    40%, 60% { transform: translate3d(0, 50%, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+    }
+    @keyframes showBottomText {
+    0% { transform: translate3d(0, -100%, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+    }
+    .animated-title {
+    color: #222;
+    font-family: 'Amiri', serif;
+    height: 90vmin;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vmin;
+    z-index: -1;
+    }
+    .animated-title > div {
+    height: 50%;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    }
+    .animated-title > div div {
+    font-size: 20px;
+    padding: 2vmin 0;
+    position: absolute;
+    }
+    .animated-title > div div span {
+    display: block;
+    }
+    .animated-title > div.text-top {
+    border-bottom: 1vmin solid #000;
+    top: 0;
+    }
+    .animated-title > div.text-top div {
+    animation: showTopText 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    bottom: 0;
+    transform: translate(0, 100%);
+    }
+    .animated-title > div.text-top div span:first-child {
+    color: #767676;
+    }
+    .animated-title > div.text-bottom {
+    bottom: 0;
+    }
+    .animated-title > div.text-bottom div {
+    animation: showBottomText 0.5s;
+    animation-delay: 1.75s;
+    animation-fill-mode: forwards;
+    top: 0;
+    transform: translate(0, -100%);
+    }
+    /* codice per il testo */
+
+
+    /* Style pour la carte */
+    #map {
+        width: 100%; /* définit la largeur de la carte à 80% de la largeur de la page */
+        height: 700px; /* définit la hauteur de la carte à 600 pixels */
+        margin: 0 auto; /* centre horizontalement la carte */
+        overflow: hidden; /* masque les éléments dépassant de la carte */
+        max-height: 0; /* définit une hauteur maximale initiale de 0 pour l'animation */
+        transition: opacity 0.5s ease-out; /* définit une transition pour l'animation */
+        border-radius: 10px;
+        transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+        box-shadow: 0px 2px 25px rgba(165, 165, 165, 0.5);
+        z-index: 2; /* définit un z-index élevé pour mettre l'élément en avant-plan */
+    }
+    /* Style pour la carte */
+      
+    /* Style pour le bouton */
+    #show-map-btn {
+        font-family: 'Playfair Display', serif;  
+        display: inline-block;
+        font-size: 15px;
+        padding: 5px;
+        margin-top: 35px; /*f*/
+        margin-bottom: 0px;
+        text-align: center;
+        appearance: none;
+        background-color: #a89f91;
+        color: #fff;
+        border-radius: 50px;
+        cursor: pointer;
+        position: relative;
+        transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+        z-index: 5;
+        left: 45%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    }
+    /* Style pour le bouton */
+
+
+    /* codice per il video */
+    .wrapper {
+        --color: #1f242d;
+        --color-invert: #fff;
+        --clip-path: circle(15px at left);
+        --clip-path-hover: circle(70px at left);
+        --clip-path-clicked: circle(800px at left);
+        --duration: 0.4s;
+        --timing-function: ease;
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        z-index: 99;
+        margin-top: 160px;
+    }
+    .wrapper .video {
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 15px;
+        clip-path: var(--clip-path);
+        transition: clip-path var(--duration) var(--timing-function);
+    }
+    .wrapper .video video {
+        position: fixed;
+        background: #000000;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+    }
+    .wrapper .text {
+        position: relative;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        opacity: var(--opacity, 1);
+        transition: opacity 0.3s var(--timing-function) 0.2s;
+    }
+    .wrapper .text::before, .wrapper .text::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: -1px;
+        right: 25px;
+        height: 0;
+    }
+    .wrapper .text::before {
+        box-shadow: 26px 0 0 1px var(--color);
+        right: var(--r, 100%);
+        opacity: var(--opacity, 0);
+        transition: right 0.5s ease-in, opacity 0.1s linear;
+    }
+    .wrapper .text::after {
+        box-shadow: 26px 0 0 1px var(--color-invert);
+        clip-path: var(--clip-path);
+        transition: clip-path var(--duration) var(--timing-function);
+    }
+    .wrapper .text > span::before, .wrapper .text > span::after {
+        content: attr(data-text);
+        padding-left: 26px;
+    }
+    .wrapper .text > span::before {
+        color: var(--color);
+    }
+    .wrapper .text > span::after {
+        color: var(--color-invert);
+        clip-path: var(--clip-path);
+        transition: clip-path var(--duration) var(--timing-function);
+        position: absolute;
+        left: 0;
+    }
+
+    .wrapper #myCheckbox {
+        width: 350vh;
+        height: 40px;
+        margin: auto;
+        position: absolute;
+        left: 0;
+        right: 0;
+        border-radius: 40px;
+        outline: none;
+        z-index: 2;
+        appearance: none;
+        cursor: pointer;
+    }
+
+    .wrapper #myCheckbox:focus {
+        outline: 0;
+    }
+
+    .wrapper #myCheckbox:hover ~ .video {
+        clip-path: var(--clip-path-hover);
+    }
+
+    .wrapper #myCheckbox:hover ~ .text::before {
+        --r: 25px;
+        --opacity: 1;
+    }
+
+    .wrapper #myCheckbox:hover ~ .text::after {
+        clip-path: var(--clip-path-hover);
+    }
+
+    .wrapper #myCheckbox:hover ~ .text > span::after {
+        clip-path: var(--clip-path-hover);
+    }
+
+    .wrapper #myCheckbox:checked {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+
+    .wrapper #myCheckbox:checked ~ .video {
+        clip-path: var(--clip-path-clicked);
+    }
+
+    .wrapper #myCheckbox:checked ~ .text {
+        --opacity: 0;
+        transition: opacity 0.3s var(--timing-function);
+    }
+
+    .wrapper #myCheckbox:checked ~ .text::after {
+        clip-path: var(--clip-path-clicked);
+    }
+
+    .wrapper #myCheckbox:checked ~ .text > span::after {
+        clip-path: var(--clip-path-clicked);
+    }
+    /* codice per il video */
+
+
+     /*inizio logo & la popup*/
+
+     a {
+        padding: 15px;
+        padding-top: 15px;
+        color: black;
+      }
+        
+      .modal {
+        visibility: hidden;
+        opacity: 0;
+        position: fixed;
+        top: 0; right: 0;
+        bottom: 0; left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.7);
+        transition: all .4s;
+        font-family: 'Noto Nastaliq Urdu', serif;
+      }
+
+      .modal:target {
+        visibility:visible;
+        opacity: 1;
+        z-index: 900;
+      }
+
+      .modal_content {
+        border-radius: 30px;
+        position: fixed;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        background-color:rgb(232, 223, 212);
+        padding: 50px 40px;
+        z-index: 900;
+
+      }
+
+      .modal_close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color:rgb(232, 223, 212);
+        text-decoration: none;
+      }
+
+      .modal_content h1 {
+        font-family: 'Amiri', serif;
+        text-align: right;
+        text-align: center;
+        font-style: bold;
+        padding-bottom: 30px;
+      }
+  
+      .modal_content p {
+        font-family: 'Amiri', serif;
+        text-align: right;
+        font-style: bold;
+        font-size: 30px;
+      }
+
+      #logo {
+        width: 90px; /* Largeur du logo */
+        height: auto; /* Hauteur automatique */
+        cursor: pointer; /* Curseur en forme de main lorsque la souris est sur l'image */
+        position: fixed; /* Position fixe */
+        top: -7px; /* Distance depuis le haut de la page */
+        left: auto; /* Distance depuis la gauche de la page */
+        z-index: 900;
+        left: 5px;
+      }
+
+
+

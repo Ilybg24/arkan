@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Massajid</title>
+    <link rel="stylesheet" type="text/css" href="massajid.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <a href="#demo">
+        <img id="logo" src="img/logo1.png" alt="Logo de la société">
+      </a>
+  
+      <div id="demo" class="modal">
+        <div class="modal_content">
+          <h1>  إِلْيَاس </h1>
+          <p> هذا العمل وقف لله </p>
+          <a href="#" class="modal_close">&times;</a>
+        </div>
+      </div>
+  
+      <input type="checkbox" id="main-navigation-toggle" class="btn btn--close" title="Toggle main navigation" />
+      <label for="main-navigation-toggle">
+        <span></span>
+      </label>
+      
+      <nav id="main-navigation" class="nav-main">
+        <ul class="menu">
+          <li class="menu__item">
+            <a class="menu__link" href="index.html">Qibla</a>
+          </li>
+          <li class="menu__item">
+            <a class="menu__link" href="massajid.html">Massajid</a>
+          </li>
+          <li class="menu__item">
+            <a class="menu__link" href="mawaqit.html">Mawaqit</a>
+          </li>
+        </ul>
+      </nav>
+
+
+      <div id="show-map-btn" onclick="toggleMap()">Activez la mappe</div>
+      <div id="map">
+          <iframe width="100%" height="100%" frameborder="0" allowfullscreen src="//umap.openstreetmap.fr/fr/map/carte-mosquee-montpellier_860053?scaleControl=false&miniMap=false&scrollWheelZoom=true&zoomControl=false&allowEdit=false&moreControl=true&searchControl=false&tilelayersControl=true&embedControl=false&datalayersControl=true&onLoadPanel=undefined&captionBar=false&fullscreenControl=true&locateControl=false&measureControl=false&editinosmControl=false"></iframe><p><a href="//umap.openstreetmap.fr/fr/map/carte-mosquee-montpellier_860053"></a></p>        
+      </div>
+  
+    </header>
+
+
+    <div class="animated-title">
+        <div class="text-top">
+          <div>
+            <span> بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ </span>
+            <span> [الجن:١٨] وَأَنَّ الْمَسَاجِدَ لِلَّهِ فَلَا تَدْعُوا مَعَ اللَّهِ أَحَدا </span>
+          </div>
+        </div>
+        <div class="text-bottom">
+          <div>Les mosquées sont consacrées à Allah : n'invoquez donc personne avec Allah [S djinn v18]</div>
+        </div>
+    </div>
+    
+    <div class="wrapper">
+        <input type="checkbox" id="myCheckbox">
+        <div class="video">
+          <video src="img/quds.mp4" loop muted autoplay playsinline></video>
+        </div>
+        <div class="text">
+          <span data-text="Brek Tfrj"></span>
+        </div>
+    </div>     
+    
+
+
+    <script>
+
+      var tl = new TimelineMax({ paused: true });
+
+      tl.to(".nav-container", 1, {
+        left: 0,
+        ease: Expo.easeInOut,
+      });
+
+      tl.staggerFrom(
+        ".menu > div",
+        0.8,
+        { y: 100, opacity: 0, ease: Expo.easeOut },
+        "0.1",
+        "-=0.4"
+      );
+
+      tl.reverse();
+      $(document).on("click", ".menu-open", function () {
+        tl.reversed(!tl.reversed());
+      });
+      $(document).on("click", ".menu-close", function () {
+        tl.reversed(!tl.reversed());
+      });
+
+      $(document).ready(function () {
+        $(".item-1").hover(
+          function () {
+            $(".nav-container").css("background-color", "#938089");
+          },
+          function () {
+            $(".nav-container").css("background", "#dfe8e0");
+          }
+        );
+
+        $(".item-2").hover(
+          function () {
+            $(".nav-container").css("background-color", "#b1b2b6");
+          },
+          function () {
+            $(".nav-container").css("background", "#dfe8e0");
+          }
+        );
+
+        $(".item-3").hover(
+          function () {
+            $(".nav-container").css("background-color", "#88a388");
+          },
+          function () {
+            $(".nav-container").css("background", "#dfe8e0");
+          }
+        );
+
+        $(".item-4").hover(
+          function () {
+            $(".nav-container").css("background-color", "#b1b2b6");
+          },
+          function () {
+            $(".nav-container").css("background", "#dfe8e0");
+          }
+        );
+
+        $(".item-5").hover(
+          function () {
+            $(".nav-container").css("background-color", "#b9b098");
+          },
+          function () {
+            $(".nav-container").css("background", "#dfe8e0");
+          }
+        );
+
+        $(".item-6").hover(
+          function () {
+            $(".nav-container").css("background-color", "#979781");
+          },
+          function () {
+            $(".nav-container").css("background", "#dfe8e0");
+          }
+        );
+      });
+
+
+      var mapDisplayed = false;
+      function toggleMap() {
+        if (mapDisplayed) {
+          // Masque la carte en réduisant la propriété "max-height" à 0
+          document.getElementById('map').style.maxHeight = "0";
+          document.getElementById('show-map-btn').innerHTML = "Ouvrez la mappe";
+        } else {
+          // Affiche la carte en augmentant la propriété "max-height" à la hauteur de la carte
+          document.getElementById('map').style.maxHeight = "600px";
+          document.getElementById('show-map-btn').innerHTML = "Fermez la mappe";
+        }
+        mapDisplayed = !mapDisplayed;
+      }
+    </script>
+  </body>
+</html>
