@@ -11,20 +11,17 @@
       <a href="#demo">
         <img id="logo" src="img/logo1.png" alt="Logo de la société">
       </a>
-  
       <div id="demo" class="modal">
         <div class="modal_content">
           <h1>  إِلْيَاس </h1>
           <p> هذا العمل وقف لله </p>
           <a href="#" class="modal_close">&times;</a>
         </div>
-      </div>
-  
+      </div>  
       <input type="checkbox" id="main-navigation-toggle" class="btn btn--close" title="Toggle main navigation" />
       <label for="main-navigation-toggle">
         <span></span>
-      </label>
-      
+      </label>      
       <nav id="main-navigation" class="nav-main">
         <ul class="menu">
           <li class="menu__item">
@@ -39,11 +36,9 @@
         </ul>
       </nav>
     </header>
-
     <video autoplay loop muted id="bg-video">
       <source src="img1/backgroundprieres.mp4" type="video/mp4">
     </video>
-
     <div class="prayer-times">
       <div class="containerpriere">
         <p id="prayer"></p>
@@ -63,10 +58,7 @@
       </tr>
       <tr id="prayerTimesRow"></tr>
     </table>
-
     <script>
-
-
       let date = new Date();
       let currentMonth = date.getMonth() + 1; // getMonth() renvoie un index compris entre 0 et 11, donc nous ajoutons 1 pour avoir un mois compris entre 1 et 12
       let currentYear = date.getFullYear();
