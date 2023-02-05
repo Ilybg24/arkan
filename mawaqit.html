@@ -60,7 +60,7 @@
     </table>
     <script>
       // URL de l'API pour récupérer les heures de prière
-      var apiUrl = "http://api.aladhan.com/v1/calendarByCity?city=Montpellier&country=FR&method=2&month=2&year=2023";
+      var apiUrl = "https://api.aladhan.com/v1/calendarByCity?city=Montpellier&country=FR&method=2&month=2&year=2023";
     
       // Mettre à jour l'heure de la prière toutes les 1 seconde
       var x = setInterval(function() {
@@ -115,10 +115,10 @@
 
       const prayer = document.getElementById("prayer");
       prayer.addEventListener("click", function() {
-        if (prayer.style.color === "red") {
-          prayer.style.color = "black";
+        if (prayer.style.color === "white") {
+          prayer.style.color = "yellow";
         } else {
-          prayer.style.color = "red";
+          prayer.style.color = "white";
         }
       });
 
