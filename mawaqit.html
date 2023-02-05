@@ -59,15 +59,8 @@
       <tr id="prayerTimesRow"></tr>
     </table>
     <script>
-      let date = new Date();
-      let currentMonth = date.getMonth() + 1; // getMonth() renvoie un index compris entre 0 et 11, donc nous ajoutons 1 pour avoir un mois compris entre 1 et 12
-      let currentYear = date.getFullYear();
-      let address = "Montpellier, France";
-      let method = 2;
       // URL de l'API pour récupérer les heures de prière
-
-      var apiUrl = `http://api.aladhan.com/v1/calendarByAddress?address=${address}&method=${method}&month=${currentMonth}&year=${currentYear}`;
-
+      var apiUrl = "http://api.aladhan.com/v1/calendarByCity?city=Montpellier&country=FR&method=2&month=2&year=2023";
     
       // Mettre à jour l'heure de la prière toutes les 1 seconde
       var x = setInterval(function() {
