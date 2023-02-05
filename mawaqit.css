@@ -100,7 +100,7 @@ table {
   margin: 0 auto;
   border-collapse: collapse;
   text-align: center;
-  margin-top: 450px;
+  margin-top: 350px;
 }
 
 th {
@@ -450,3 +450,39 @@ td{
       z-index: 900;
       left: 5px;
     }
+    
+
+    /* inizio codice per il titolo */
+    .ml1 {
+      font-weight: 100;
+      font-size: 40px;
+      text-align: center;
+      color: rgb(255, 255, 255);
+      margin-top: 100px;
+    }
+    
+    .ml1 .letter {
+      line-height: 1em;
+      font-family: 'Reem Kufi', sans-serif;
+    }
+    
+    .ml1 .text-wrapper {
+      position: relative;
+      padding-top: 0.1em;
+      padding-right: 0.05em;
+      padding-bottom: 0.15em;
+      border-radius: 50px;
+    }
+    
+    .ml1 .line {
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background-color: #fff;
+      transform-origin: 0 0;
+    }
+    
+    .ml1 .line1 { top: 0; }
+    .ml1 .line2 { bottom: 0; }

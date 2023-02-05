@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="mawaqit.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>   <!--script per la scritture del titolo -->
   </head>
   <body>
     <header>
       <a href="#demo">
-        <img id="logo" src="img/logo1.png" alt="Logo de la société">
+        <img id="logo" src="img/logo1.png" alt="Logo de la société">  
       </a>
       <div id="demo" class="modal">
         <div class="modal_content">
@@ -36,6 +40,13 @@
         </ul>
       </nav>
     </header>
+    <h1 class="ml1">
+      <span class="text-wrapper">
+        <span class="line line1"></span>
+        <span class="letters">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span>
+        <span class="line line2"></span>
+      </span>
+    </h1>
     <video autoplay loop muted id="bg-video">
       <source src="img1/backgroundprieres.mp4" type="video/mp4">
     </video>
@@ -59,8 +70,37 @@
       <tr id="prayerTimesRow"></tr>
     </table>
     <script>
+      // script per il titolo
+      var textWrapper = document.querySelector('.ml1 .letters');
+      textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+      anime.timeline({loop: true})
+        .add({
+          targets: '.ml1 .letter',
+          scale: [0.3,1],
+          opacity: [0,1],
+          translateZ: 0,
+          easing: "easeOutExpo",
+          duration: 100,
+          delay: (el, i) => 70 * (i+1)
+        }).add({
+          targets: '.ml1 .line',
+          scaleX: [0,1],
+          opacity: [0.5,1],
+          easing: "easeOutExpo",
+          duration: 7000,
+          offset: '-=875',
+          delay: (el, i, l) => 80 * (l - i)
+        }).add({
+          targets: '.ml1',
+          opacity: 0,
+          duration: 10000,
+          easing: "easeOutExpo",
+          delay: 1000
+        });
+
       // URL de l'API pour récupérer les heures de prière
-      var apiUrl = "https://api.aladhan.com/v1/calendarByCity?city=Montpellier&country=FR&method=2&month=2&year=2023";
+      var apiUrl = "http://api.aladhan.com/v1/calendarByCity?city=Montpellier&country=FR&method=2&month=2&year=2023";
     
       // Mettre à jour l'heure de la prière toutes les 1 seconde
       var x = setInterval(function() {
