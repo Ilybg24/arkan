@@ -99,59 +99,81 @@
           delay: 1000
         });
 
-      // URL de l'API pour récupérer les heures de prière
-      var apiUrl = "https://api.aladhan.com/v1/calendarByCity?city=Montpellier&country=FR&method=2&month=2&year=2023";
-    
-      // Mettre à jour l'heure de la prière toutes les 1 seconde
-      var x = setInterval(function() {
-        // Appeler l'API pour récupérer les heures de prière
-        fetch(apiUrl)
-          .then(function(response) {
-            return response.json();
-          })
-          .then(function(data) {
-            // Récupérer les heures de prière pour le jour en cours
-            var date = data.data[0];
-            var prayerTimes = {
-              "Fajr": date.timings.Fajr,
-              "Lever du soleil": date.timings.Sunrise,
-              "Dohr": date.timings.Dhuhr,
-              "Asr": date.timings.Asr,
-              "Maghrib": date.timings.Maghrib,
-              "Isha": date.timings.Isha,
-              "Qiyam": date.timings.Midnight
-            };
-    
-            // Obtenir la date et l'heure actuelles
-            var now = new Date();
-            var currentHour = now.getHours();
-            var currentMinute = now.getMinutes();
-            var currentSecond = now.getSeconds();
-            var currentTime = currentHour * 60 + currentMinute;
-    
-            // Boucler sur les heures de chaque prière
-            for (var prayer in prayerTimes) {
-              // Séparer l'heure et les minutes
-              var time = prayerTimes[prayer].split(":");
-              var prayerHour = parseInt(time[0]);
-              var prayerMinute = parseInt(time[1]);
-              var prayerTime = prayerHour * 60 + prayerMinute;
-    
-              // Trouver la prière la plus proche
-              if (prayerTime > currentTime) {
-                var timeLeft = prayerTime - currentTime;
+        // URL de l'API pour récupérer les heures de prière
+        var apiUrl = "https://api.aladhan.com/v1/calendarByCity?city=Montpellier&country=FR&method=2&month=2&year=2023";
+
+        // Mettre à jour l'heure de la prière toutes les 1 seconde
+        var x = setInterval(function() {
+          // Appeler l'API pour récupérer les heures de prière
+          fetch(apiUrl)
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              // Récupérer les heures de prière pour le jour en cours
+              var date = data.data[0];
+              var prayerTimes = {
+                "Fajr": date.timings.Fajr,
+                "Lever du soleil": date.timings.Sunrise,
+                "Dohr": date.timings.Dhuhr,
+                "Asr": date.timings.Asr,
+                "Maghrib": date.timings.Maghrib,
+                "Isha": date.timings.Isha,
+                "Qiyam": date.timings.Midnight
+              };
+
+              // Obtenir la date et l'heure actuelles
+              var now = new Date();
+              var currentHour = now.getHours();
+              var currentMinute = now.getMinutes();
+              var currentSecond = now.getSeconds();
+              var currentTime = currentHour * 60 + currentMinute;
+
+              // Initialiser la prière suivante
+              var nextPrayer = "Qiyam";
+
+              // Boucler sur les heures de chaque prière
+              for (var prayer in prayerTimes) {
+                // Séparer l'heure et les minutes
+                var time = prayerTimes[prayer].split(":");
+                var prayerHour = parseInt(time[0]);
+                var prayerMinute = parseInt(time[1]);
+                var prayerTime = prayerHour * 60 + prayerMinute;
+
+                // Trouver la prière la plus proche
+                if (prayerTime > currentTime) {
+                  var timeLeft = prayerTime - currentTime;
+                  var hoursLeft = Math.floor(timeLeft / 60);
+                  var minutesLeft = timeLeft % 60;
+                  var secondsLeft = 60 - currentSecond;
+
+                  // Mettre à jour la prochaine prière
+                  nextPrayer = prayer;
+
+                  // Mettre à jour le HTML
+                  document.getElementById("prayer").innerHTML = "La prière suivante : " + nextPrayer;
+                  document.getElementById("timer").innerHTML = hoursLeft + " heures " + minutesLeft + " minutes " + secondsLeft + " secondes";
+                  break;
+                }
+              }
+
+              // Si la prochaine prière est Qiyam,
+              // afficher le temps restant jusqu'à minuit
+              if (nextPrayer === "Qiyam") {
+                var midnight = 24 * 60;
+                var currentTime = currentHour * 60 + currentMinute;
+                var timeLeft = midnight - currentTime;
                 var hoursLeft = Math.floor(timeLeft / 60);
                 var minutesLeft = timeLeft % 60;
                 var secondsLeft = 60 - currentSecond;
-    
-                // Mettre à jour le HTML
-                document.getElementById("prayer").innerHTML = "La priére suivante : " + prayer;
+
+                document.getElementById("prayer").innerHTML = "La prière suivante : " + nextPrayer;
                 document.getElementById("timer").innerHTML = hoursLeft + " heures " + minutesLeft + " minutes " + secondsLeft + " secondes";
-                break;
               }
-            }
-          });
-      }, 1000);
+            });
+        }, 1000);
+
+
 
       const prayer = document.getElementById("prayer");
       prayer.addEventListener("click", function() {
